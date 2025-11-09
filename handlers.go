@@ -26,7 +26,7 @@ type Task struct {
 	Repeat  string `json:"repeat"`
 }
 
-// JSONObject используется при формиравании JSON-объекта
+// JSONObject используется при формировании JSON-объекта
 type JSONObject struct {
 	ID    string `json:"id,omitempty"`
 	Token string `json:"token,omitempty"`
@@ -259,12 +259,12 @@ func GetTasks(res http.ResponseWriter, req *http.Request) {
 }
 
 // GetTaskId обработчик для GET-запроса /api/task?id=<идентификатор>.
-// Возращает JSON-объект со всеми полями задачи с указанным идентификатором.
+// Возвращает JSON-объект со всеми полями задачи с указанным идентификатором.
 func GetTaskId(res http.ResponseWriter, req *http.Request) {
 	// Получаем id из запроса
 	id := req.URL.Query().Get("id")
 
-	// Создаем экзмепляр структуры Task и заполняем его поля значениеми из таблицы scheduler
+	// Создаем экзеепляр структуры Task и заполняем его поля значениями из таблицы scheduler
 	var task Task
 
 	rows, err := db.Query("SELECT *FROM scheduler WHERE id = :id",
@@ -328,7 +328,7 @@ func PutTask(res http.ResponseWriter, req *http.Request) {
 		return
 	}
 
-	// Если переданные в JSON поля пустые, оставляем поля преждней структуры
+	// Если переданные в JSON поля пустые, оставляем поля прежней структуры
 	if taskUpdate.Title == "" {
 		SendErrorResponse(res, "не указан заголовок задачи", http.StatusBadRequest)
 		return
@@ -374,7 +374,7 @@ func PutTask(res http.ResponseWriter, req *http.Request) {
 }
 
 // TaskDone обработчик для POST-запроса /api/task/done, который делает
-// задачу выполненой. Одноразовая задача с пустым полем repeat удаляется.
+// задачу выполненной. Одноразовая задача с пустым полем repeat удаляется.
 // Возвращает пустой JSON или ошибку
 func TaskDone(res http.ResponseWriter, req *http.Request) {
 	// Получаем id из запроса
@@ -472,7 +472,7 @@ func DeleteTask(res http.ResponseWriter, req *http.Request) {
 
 // SignIn обработчик POST-запроса /api/signin. Получает JSON с полем password.
 // Если пароль совпадает, формирует JWT и передает его в поле JSON-объекта.
-// Если пароль невернный или произошла ошибка, возвращает JSON с текстом ошибки
+// Если пароль неверный или произошла ошибка, возвращает JSON с текстом ошибки
 func SignIn(res http.ResponseWriter, req *http.Request) {
 	var p Password
 
@@ -494,7 +494,7 @@ func SignIn(res http.ResponseWriter, req *http.Request) {
 		return
 	}
 
-	// Создаем токен и в качетсве полезной нагрузки передаем хэш
+	// Создаем токен и в качестве полезной нагрузки передаем хэш
 	secret := []byte("secret_key")
 
 	hashedPass := sha256.Sum256([]byte(p.Pass))
